@@ -1,0 +1,86 @@
+//Step 1 - TCP bewteen consoles:
+#MinGW CMD Console 1
+gcc tcpsend.c -lws2_32 -o tcpsend
+gcc tcprecv.c -lws2_32 -o tcprecv
+tcprecv
+#MinGW CMD Console 2
+timethis tcpsend 100MB_file.dat 127.0.0.1 6069
+
+//Step 2 - UDP between consoles
+#MinGW CMD Console 1
+gcc udpsend.c sw.c -lws2_32 -o udpsend
+gcc udprecv.c sw.c -lws2_32 -o udprecv
+udprecv
+#MinGW CMD Console 2
+timethis udpsend 100MB_file.dat 127.0.0.1 6009
+
+//Step 3 - UDP between consoles with 2% discard
+#MinGW CMD Console 1
+udprecv
+#MinGW CMD Console 2
+gcc udpdiscard.c sw.c -lws2_32 -o udpdiscard
+timethis udpdiscard 100MB_file.dat 127.0.0.1 6009
+
+//Step 4 - TCP to server
+#PUTTY Console
+gcc tcprecv.c -lnsl -o tcprecv
+./tcprecv
+
+#MinGW CMD Console
+timethis tcpsend 100MB_file.dat 131.247.3.46 6069
+
+//Step 5 - UDP to server
+#PUTTY Console
+gcc udprecv.c sw.c -lnsl -o udprecv
+./udprecv
+
+#MinGW CMD Console
+timethis udpsend 100MB_file.dat 131.247.3.46 6009
+
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+
+//Linux:
+#TCP:
+gcc tcpsend.c -lnsl -o tcpsend
+gcc tcprecv.c -lnsl -o tcprecv
+
+./tcprecv
+./tcpsend 1MB_file.dat 131.247.3.46 6069
+./tcpsend 100MB_file.dat 131.247.3.46 6069
+
+#UDP:
+gcc udpsend.c sw.c -lnsl -o udpsend
+gcc udprecv.c sw.c -lnsl -o udprecv
+
+./udprecv
+./udpsend 1MB_file.dat 131.247.3.46 6009
+./udprecv 100MB_file.dat 131.247.3.46 6009
+
+//Windows:
+cd C:\Users\Bo\Dropbox\School\Fall 2017\CNT 4004 Computer Networks\Project\Code
+
+#TCP:
+cl tcpsend.c wsock32.lib
+cl tcprecv.c wsock32.lib
+timethis tcpsend 1MB_file.dat 131.247.3.46 6069
+timethis tcpsend 100MB_file.dat 131.247.3.46 6069
+timethis tcpsend 1MB_file.dat 127.0.0.1 6069
+timethis tcpsend 100MB_file.dat 127.0.0.1 6069
+
+#UDP:
+cl udpsend.c sw.c wsock32.lib
+cl udprecv.c sw.c wsock32.lib
+udprecv
+timethis udpsend 1MB_file.dat 131.247.3.46 6009
+timethis udpsend 100MB_file.dat 131.247.3.46 6009
+timethis udpsend 1MB_file.dat 127.0.0.1 6009
+timethis udpsend 100MB_file.dat 127.0.0.1 6009
+
+//MinGW
+gcc udpsend.c sw.c -lws2_32 -o udpsend
+gcc udprecv.c sw.c -lws2_32 -o udprecv
+udprecv
+timethis udpsend 100MB_file.dat 131.247.3.46 6009
