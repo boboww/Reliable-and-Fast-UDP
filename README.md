@@ -1,6 +1,3 @@
-# Fast UDP transfer
-
-
 # Service to be provided:
 The service to be provided is reliable and fast file transfer between two Internet hosts that uses UDP only.
 
